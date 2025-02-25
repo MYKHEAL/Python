@@ -3,30 +3,40 @@ print('<<<<Welcome to semicolon Expenses Tracker App>>>>')
 checkout = []
 
 def display_menu():
-	print('Welcome to the menu')
-	print('1.Add an expense')
-	print('2.View all expenses')
-	print('3.Calculate total expenses')
-	print('4.Exit')
+	return (
+	"\n<<<<<<<<<Welcome to the menu>>>>>>>>\n"
+	"1.Add an expense\n"
+	"2.View all expenses\n"
+	"3.Calculate total expenses\n"
+	"4.Exit"
 
-def add_expense():
+	)
 
-	date = input('Enter date(YY_MM_DD): ')
-	name = input('Enter goods bought: ')
-	amount = float(input('Enter amount of goods: '))
-	checkout.append({'name': name, 'amount': amount})
-	print("expenses added.... ")
+def add_expense(date,name,amount):
+
+	checkout.append({'name': name, 'amount': amount, 'date': date})
+	return"Expenses added.... "
 
 
 
 def view_expense():
 
 	if not checkout:
-		print("You haven't purchase anything yet!!/n ")
+		return "You haven't purchase anything yet!! "
 	else:
-		print('All espenses/n')
+		expenses_cont = "All Expenses:\n"
 		for expense in checkout:
-				print(f"Checkouts: {expense['name']} , Amount: {expense['amount']}")
+				expenses_list += f"Goods: {expense['name']} , Amount: {expense['amount']} , Date: {expense['date']}\n"
+		return expenses_Cont
+
+
+def calculate_expenses():
+	if not checkout:
+		return "Total Expenses: 0"
+	total = sum(expense['amount'] for expense in checkout)
+	return f"Total Expenses: {total}"
+	
+	
 
 
 
@@ -35,15 +45,42 @@ def view_expense():
 
 def main():
 	while True:
-		display_menu()
+		menu = display_menu()
+		print(menu)
 		option = input('pick ur preferable order(1_4): ')
+		
 
 		if option == '1':
-			add_expense()
+			date = input('Enter date (YYYY_MM_DD): ')
+			name = input('Enter goods bought: ')
+
+			while True:
+				amount = float(input('Enter amount of goods: '))
+
+				if amount < 1:
+					print('enter a positive amount')
+				else:
+					
+					result = add_expense(date, name, amount)
+					print(result)
+					break
+
 	
-		if option == '2':
-			view_expense()
-
-
+		elif option == '2':
+			result = view_expense()
+			print(result)
+		elif option == '3':
+			result = calculate_expenses()
+			print(result)
+		
+		elif option == '4':
+			print('Good bye thanks😭!!')
+			break
+		else:
+		   print('Invalid number')
+		
 if __name__ == "__main__":
+
+
     main()
+
